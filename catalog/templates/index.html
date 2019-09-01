@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% load static %}
+
+<!--<div>
+{% load static %}
+<img src="{% static 'img1.jpg' %}" alt="My image" style="width:555px;height:540px;"/>
+</div>-->
+<body>
+<center>
+<h1>POSOCO LIBRARY</h1>
+</center>
+<!--<div class="w3-content w3-display-container">
+  <img class="mySlides" src="{% static 'img.jpg' %}" style="width:50%">
+  <img class="mySlides" src="{% static 'img_mag.jpg' %}" style="width:50%">
+  <img class="mySlides" src="{% static 'img3.jpg' %}" style="width:50%">
+  <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+  <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+</div>-->
+
+
+<h2>The library has the following record content</h2>
+<center>
+<table class="customers">
+  <tr>
+    <th>Books</th>
+    <th>Copies</th>
+    <th>Copies available</th>
+    <th>Authors</th>
+  </tr>
+     <tr>
+    <td>{{num_books}}</td>
+    <td>{{num_instances}}</td>
+    <td>{{num_instances_available}}</td>
+         <td>{{num_authors}}</td>
+  </tr>
+</table>
+    </center>
+</body>
+<script>
+var slideIndex = 1;
+showDivs(slideIndex);
+
+function plusDivs(n) {
+  showDivs(slideIndex += n);
+}
+
+function showDivs(n) {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  if (n > x.length) {slideIndex = 1}
+  if (n < 1) {slideIndex = x.length}
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  x[slideIndex-1].style.display = "block";
+}
+</script>
+{% endblock %}

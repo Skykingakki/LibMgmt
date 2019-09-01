@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<link>
+<meta charset="UTF-8">
+<title>{% block title %}POSOCO Library{% endblock %}</title>
+{% load staticfiles %}
+<link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<link rel="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+<!--<link rel="stylesheet" type="text/css" href="{% static 'catalog/style.css' %}" />-->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="{% static 'jscript.js' %}">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstap/3.3.6/js/bootstap.min.js"></script>
+</head>
+<style>
+body{
+    height: 100%;
+    margin:0;
+}
+.bg{
+  height:100%;
+  background-image: url( "{% static 'img2.jpg' %}");
+ background-position:center;
+ background-repeat:no-repeat;
+ background-size:cover;
+ opacity:1;
+}
+</style>
+<body>
+<div class="bg">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <!--header-->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="{% url 'index' %}">Home</a>
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="">
+                        <a href="{% url 'books' %}">
+                            <span class="glyphicon glyphicon-book" aria-hidden="true"></span>&nbsp;Book
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'authors' %}">
+                            <span class="glyphicon glyphicon-user" aria-hidden="Authors"></span>&nbsp;Authors
+                        </a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                    <li><h3 style="{text:white}">User:{{user.get_username}}</h3></li>
+                    <li class="">
+                        <a href="{% url 'my-borrowed' %}">
+                            <span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;My borrowed
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="{% url 'logout' %}?next={{request.path}}">
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;Logout
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="">
+                        <a href="{% url 'login' %}?next={{request.path}}">
+                            <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>&nbsp;Login
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block body %}
+    {% endblock %}
+    <div class="col-sm-10 ">
+        {% block content %}{% endblock %}
+
+        {% block pagination %}
+        {% if is_paginated %}
+        <div class="pagination">
+            <span class="page-links">
+                {% if page_obj.has_previous %}
+                    <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+                {% endif %}
+                <span class="page-current">
+                    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
+        {% endblock %}
+    </div>
+</div>
+</body>
+</html>
